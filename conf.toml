@@ -1,0 +1,11 @@
+# default false
+release_mode = false
+
+# default DEBUG, DEBUG INFO WARN ERROR OFF
+log_level = "DEBUG"
+
+[app]
+name = "GO LEARNING"
+
+[server]
+port = ":8080"
