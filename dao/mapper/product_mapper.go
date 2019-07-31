@@ -27,6 +27,13 @@ func Update(product *T_product) {
 		product.Product_name,product.Product_url,product.Updated_at,product.Updated_by, product.Id)
 }
 
+func Select(id int) T_product  {
+	db := dao.GetDb()
+	var t_p T_product
+	db.Raw("SELECT * FROM t_product WHERE id = ?", id).Scan(&t_p)
+	return t_p
+}
+
 type (
 	T_product struct {
 		Id int

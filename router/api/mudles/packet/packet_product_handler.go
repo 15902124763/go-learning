@@ -43,6 +43,7 @@ func Update(c echo.Context) (err error) {
 
 // 获取商品列表
 func GetList(c echo.Context) error {
-	return c.JSON(http.StatusOK, response.OK())
+	product := service.Select(13)
+	return c.JSON(http.StatusOK, product)
 }
 
