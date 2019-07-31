@@ -4,25 +4,40 @@ import (
 	"github.com/labstack/echo"
 	"go-learning/router/response"
 	"net/http"
+	"go-learning/service"
+	"strconv"
 )
 
 // 新增商品
 func Add(c echo.Context) (err error) {
-	product := new(Product)
+	product := new(service.ProductBO)
 	if  err = c.Bind(product); err != nil{
 		return c.JSONBlob(http.StatusBadRequest, nil)
 	}
-	println(product)
-	return c.JSON(http.StatusOK, response.Of(product))
+	// 保存
+	service.Save(product)
+	return c.JSON(http.StatusOK, response.OK())
 }
 
 // 删除商品
 func Del(c echo.Context) error {
+	id := c.QueryParam("id")
+	i, e := strconv.Atoi(id)
+	if e != nil {
+		return c.JSON(http.StatusInternalServerError, response.Error(nil))
+	}
+	service.Del(i)
 	return c.JSON(http.StatusOK, response.OK())
 }
 
 // 更新商品
-func Update(c echo.Context) error {
+func Update(c echo.Context) (err error) {
+	product := new(service.ProductBO)
+	if  err = c.Bind(product); err != nil{
+		return c.JSONBlob(http.StatusBadRequest, nil)
+	}
+	// 保存
+	service.Update(product)
 	return c.JSON(http.StatusOK, response.OK())
 }
 
@@ -31,9 +46,3 @@ func GetList(c echo.Context) error {
 	return c.JSON(http.StatusOK, response.OK())
 }
 
-type (
-	Product struct {
-		productName string `json:"productName" form:"productName" query:"productName"`
-		productUrl string `json:"productUrl" form:"productUrl" query:"productUrl"`
-	}
-)

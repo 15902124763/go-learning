@@ -1,10 +1,10 @@
 package dao
 
 import (
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	"github.com/jinzhu/gorm"
 	"fmt"
 	"go-learning/log"
+	_"github.com/go-sql-driver/mysql"
 )
 
 var db *gorm.DB

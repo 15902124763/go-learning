@@ -6,13 +6,35 @@ import (
 )
 var db *DB
 
-func Save(product *Product)  {
+func Save(product *T_product) {
 	db = dao.GetDb()
-	db.Save(product)
+	db.Create(product)
 }
 
-type Product struct {
-	product_name string
-	product_url string
-	created_at string
+func Del(id int)  {
+	db := dao.GetDb()
+	db.Delete(T_product{},"id=?", id)
 }
+
+func Update(product *T_product) {
+	db = dao.GetDb()
+	//db.Model(&T_product{}).Where("id=?", product.Id).Update(
+	//	"product_name", product.Product_name,
+	//	"product_url",product.Product_url,
+	//	"updated_at",product.Updated_at,
+	//	"updated_by",product.Updated_by,)
+	db.Exec("UPDATE t_product SET product_name=?,product_url=?,updated_at=?,updated_by=? WHERE id=?",
+		product.Product_name,product.Product_url,product.Updated_at,product.Updated_by, product.Id)
+}
+
+type (
+	T_product struct {
+		Id int
+		Product_name string
+		Product_url string
+		Created_at string
+		Created_by string
+		Updated_at string
+		Updated_by string
+	}
+)
