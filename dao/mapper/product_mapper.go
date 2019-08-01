@@ -34,6 +34,14 @@ func Select(id int) T_product  {
 	return t_p
 }
 
+func SelectAll() []T_product  {
+	db := dao.GetDb()
+	//var pList []T_product
+	var pList []T_product
+	db.Find(&pList)
+	return pList
+}
+
 type (
 	T_product struct {
 		Id int

@@ -22,10 +22,15 @@ func Add(c echo.Context) (err error) {
 // 删除商品
 func Del(c echo.Context) error {
 	id := c.QueryParam("id")
+	if id == "" {
+		return c.JSON(http.StatusBadRequest, response.ParamError)
+	}
+
 	i, e := strconv.Atoi(id)
 	if e != nil {
 		return c.JSON(http.StatusInternalServerError, response.Error(nil))
 	}
+
 	service.Del(i)
 	return c.JSON(http.StatusOK, response.OK())
 }
@@ -43,7 +48,19 @@ func Update(c echo.Context) (err error) {
 
 // 获取商品列表
 func GetList(c echo.Context) error {
-	product := service.Select(13)
+	param := c.QueryParam("id")
+
+	if param == "" {
+		all := service.SelectAll()
+		return c.JSON(http.StatusOK, response.Of(all))
+	}
+
+	i, e := strconv.Atoi(param)
+
+	if e != nil  {
+		return c.JSON(http.StatusInternalServerError, response.Error(nil))
+	}
+	product := service.Select(i)
 	return c.JSON(http.StatusOK, product)
 }
 

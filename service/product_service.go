@@ -33,6 +33,10 @@ func Select(id int) mapper.T_product {
 	return mapper.Select(id)
 }
 
+func SelectAll() []mapper.T_product  {
+	return mapper.SelectAll()
+}
+
 // 成员变量首字母要大写
 type (
 	ProductBO struct {
