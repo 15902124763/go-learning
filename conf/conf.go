@@ -19,7 +19,7 @@ type config struct {
 	CacheStore  string `toml:"cache_store"`
 	App         app
 	Server      server
-	//Redis       redis
+	Redis       redis
 	//Kafka       kafka
 }
 
@@ -41,18 +41,12 @@ type server struct {
 	Port string `toml:"port"`
 }
 
-//type redis struct {
-//	Server         string        `toml:"server"`
-//	Pwd            string        `toml:"pwd"`
-//	MaxIdle        int           `toml:"maxIdle"`
-//	Wait           bool          `toml:"wait"`
-//	MaxActive      int           `toml:"maxActive"`
-//	IdleTimeout    time.Duration `toml:"idleTimeout"`
-//	ReadTimeout    time.Duration `toml:"readTimeout"`
-//	WriteTimeout   time.Duration `toml:"writeTimeout"`
-//	ConnectTimeout time.Duration `toml:"connectTimeout"`
-//	DbIndex        int           `toml:"dbIndex"`
-//}
+type redis struct {
+	Server       string        `toml:"server"`
+	Port         int           `toml:"port"`
+	Password     string        `toml:"password"`
+	DB           int           `toml:"db"`
+}
 
 func init() {
 	if err := InitConfig(""); err != nil {
@@ -94,24 +88,6 @@ func InitConfig(configFile string) error {
 	log.Infof("config data:%v", Conf)
 
 	return nil
-}
-
-func GetLogLvl() log.Lvl {
-	//DEBUG INFO WARN ERROR OFF
-	switch Conf.LogLevel {
-	case "DEBUG":
-		return log.DEBUG
-	case "INFO":
-		return log.INFO
-	case "WARN":
-		return log.WARN
-	case "ERROR":
-		return log.ERROR
-	case "OF":
-		return log.OFF
-	}
-
-	return log.DEBUG
 }
 
 const (

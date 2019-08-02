@@ -9,3 +9,10 @@ name = "GO LEARNING"
 
 [server]
 port = ":8080"
+
+[redis]
+server = "127.0.0.1"
+port = 6379
+# 空要加双引号
+password = ""
+db = 0
