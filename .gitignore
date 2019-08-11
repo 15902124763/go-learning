@@ -22,14 +22,18 @@ _testmain.go
 *.exe
 *.test
 *.prof
+.settings/*.prefs
 
 # Mac
 .DS_Store
 
 # IDEA
 .idea
+.project
+go-learning/vendor/*
+/go-learning/app
 
-
+.gitignore:34
 # Glide
 vendor
 
@@ -37,3 +41,4 @@ vendor
 # assets/assets.go
 # template/template.go
 /go-learning
+.settings
